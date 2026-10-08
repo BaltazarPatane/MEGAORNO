@@ -143,9 +143,7 @@ py -3.12 -m venv .venv
 
 El ejemplo y el análisis de históricos pueden utilizarse sin el puente WCF de Windows. El funcionamiento sobre hardware real debe comprobarse con el instrumento, los sensores y las condiciones específicas de la instalación.
 
-## Validación y próximos pasos
-
-La versión 3.2 cuenta con **115 pruebas automatizadas de Python/Qt aprobadas**, además de verificaciones del puente C# mediante datos simulados. Están documentadas en [VALIDACION.md](docs/VALIDACION.md). Estas pruebas no sustituyen una validación metrológica ni un ensayo completo sobre el horno.
+## Próximos pasos
 
 Las próximas etapas del proyecto contemplan:
 
@@ -164,8 +162,7 @@ Las próximas etapas del proyecto contemplan:
 - [Documentación técnica completa](docs/README_TECNICO_COMPLETO.md) — desarrollo, decisiones de diseño y fundamentaciones ampliadas.
 - [Arquitectura de software](docs/ARQUITECTURA.md) — módulos, comunicación y persistencia.
 - [Historial de versiones](CHANGELOG.md) — cambios y política de ramas.
-- [Pruebas y validación](docs/VALIDACION.md) — alcance de los ensayos.
-- [Carpeta de imágenes](docs/img/) — espacio reservado para fotografías y capturas de pantalla.
+- [Carpeta de imágenes](docs/) — espacio reservado para fotografías y capturas de pantalla.
 
 <div align="center">
 
