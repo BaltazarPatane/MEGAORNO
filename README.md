@@ -15,10 +15,7 @@
 
 </div>
 
-<!-- FOTO 01: Horno completo con fondo transparente.
-Subir docs/img/01-horno-completo.png y reemplazar este comentario por:
 ![Vista general del horno industrial](docs/img/01-horno-completo.png)
--->
 
 ## Descripción general
 
@@ -34,10 +31,7 @@ Se trata de un horno industrial de grandes dimensiones, equipado con varios quem
 
 En estos procesos no importa únicamente alcanzar una temperatura máxima. La **velocidad de ascenso, el tiempo de mantenimiento, la uniformidad espacial y el enfriamiento** influyen en el comportamiento del material, las tensiones térmicas y la repetibilidad del tratamiento. MEGAORNO permite registrar y evaluar esa evolución sin depender de cálculos manuales posteriores.
 
-<!-- FOTO 02: Lateral del horno, quemadores y actuadores.
-Subir docs/img/02-horno-quemadores.jpg
 ![Quemadores y sistema de gas](docs/img/02-horno-quemadores.jpg)
--->
 
 ## Origen y relevamiento de requerimientos
 
@@ -97,12 +91,12 @@ La aplicación presenta una pantalla de inicio y **cinco pestañas principales**
 | **Datos** | Revisar todas las muestras, guardar la sesión y registrar anotaciones de operación en la bitácora. |
 | **Avisos** | Consultar desviaciones, problemas de lectura y diagnósticos de conexión. |
 
-<!-- FOTO 04: Captura de Inicio, docs/img/04-inicio.png -->
-<!-- FOTO 05: Captura de Curvas, docs/img/05-curvas.png -->
-<!-- FOTO 06: Captura de Perfil ideal, docs/img/06-perfil-ideal.png -->
-<!-- FOTO 07: Captura de Estadísticas, docs/img/07-estadisticas.png -->
-<!-- FOTO 08: Captura de Datos y bitácora, docs/img/08-datos.png -->
-<!-- FOTO 09: Captura de Avisos, docs/img/09-avisos.png -->
+![Inicio](docs/img/04-inicio.png)
+![Curvas](docs/img/05-curvas.png)
+![Perfil Ideal](docs/img/06-perfil-ideal.png)
+![Estadísticas](docs/img/07-estadisticas.png)
+![Datos y bitácor](docs/img/08-datos.png)
+![Avisos](docs/img/09-avisos.png)
 
 El gráfico permite explorar distintas ventanas de tiempo, hacer zoom por eje, desplazar la vista y consultar valores registrados. En la versión 3.2, **Pausa/Reanudar** detiene temporalmente la recepción de MEGAORNO sin eliminar el historial ni cerrar la sesión. La adquisición interna del registrador MadgeTech continúa de forma independiente.
 
