@@ -1,0 +1,13 @@
+OK: Initial poll interval
+OK: Epoch accompanies a published measurement
+OK: An in-flight response is dropped during pause
+OK: No new request starts while paused
+OK: Resume releases the same waiting gate
+OK: Rapid resume never accepts an old interval
+OK: An old command cannot pause a newer interval
+OK: Pause interrupts a long polling delay
+OK: Repeated pause/resume accepts only the newest interval
+OK: Closing stops a paused or running gate
+OK: Line protocol processes commands and exits on EOF
+OK: Malformed control fails closed without exposing input
+Passed 12 PollGate checks.
