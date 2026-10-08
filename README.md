@@ -91,12 +91,12 @@ La aplicación presenta una pantalla de inicio y **cinco pestañas principales**
 | **Datos** | Revisar todas las muestras, guardar la sesión y registrar anotaciones de operación en la bitácora. |
 | **Avisos** | Consultar desviaciones, problemas de lectura y diagnósticos de conexión. |
 
-![Inicio](docs/img/04-inicio.png)
-![Curvas](docs/img/05-curvas.png)
-![Perfil Ideal](docs/img/06-perfil-ideal.png)
-![Estadísticas](docs/img/07-estadisticas.png)
-![Datos y bitácor](docs/img/08-datos.png)
-![Avisos](docs/img/09-avisos.png)
+![Inicio](docs/capturas/04-inicio.png)
+![Curvas](docs/capturas/05-curvas.png)
+![Perfil Ideal](docs/capturas/06-perfil-ideal.png)
+![Estadísticas](docs/capturas/07-estadisticas.png)
+![Datos y bitácor](docs/capturas/08-datos.png)
+![Avisos](docs/capturas/09-avisos.png)
 
 El gráfico permite explorar distintas ventanas de tiempo, hacer zoom por eje, desplazar la vista y consultar valores registrados. En la versión 3.2, **Pausa/Reanudar** detiene temporalmente la recepción de MEGAORNO sin eliminar el historial ni cerrar la sesión. La adquisición interna del registrador MadgeTech continúa de forma independiente.
 
