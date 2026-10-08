@@ -15,7 +15,7 @@
 
 </div>
 
-![Vista general del horno industrial](docs/img/01-horno-completo.png)
+![Vista general del horno industrial](docs/img/horno-completo.png)
 
 ## Descripción general
 
@@ -31,7 +31,7 @@ Se trata de un horno industrial de grandes dimensiones, equipado con varios quem
 
 En estos procesos no importa únicamente alcanzar una temperatura máxima. La **velocidad de ascenso, el tiempo de mantenimiento, la uniformidad espacial y el enfriamiento** influyen en el comportamiento del material, las tensiones térmicas y la repetibilidad del tratamiento. MEGAORNO permite registrar y evaluar esa evolución sin depender de cálculos manuales posteriores.
 
-![Quemadores y sistema de gas](docs/img/02-horno-quemadores.jpg)
+![Quemadores y sistema de gas](docs/img/horno-quemadores.jpg)
 
 ## Origen y relevamiento de requerimientos
 
@@ -91,12 +91,12 @@ La aplicación presenta una pantalla de inicio y **cinco pestañas principales**
 | **Datos** | Revisar todas las muestras, guardar la sesión y registrar anotaciones de operación en la bitácora. |
 | **Avisos** | Consultar desviaciones, problemas de lectura y diagnósticos de conexión. |
 
-![Inicio](docs/capturas/04-inicio.png)
-![Curvas](docs/capturas/05-curvas.png)
-![Perfil Ideal](docs/capturas/06-perfil-ideal.png)
-![Estadísticas](docs/capturas/07-estadisticas.png)
-![Datos y bitácor](docs/capturas/08-datos.png)
-![Avisos](docs/capturas/09-avisos.png)
+![Inicio](docs/capturas/inicio.png)
+![Curvas](docs/capturas/curvas.png)
+![Perfil Ideal](docs/capturas/perfil-ideal.png)
+![Estadísticas](docs/capturas/estadisticas.png)
+![Datos](docs/capturas/datos.png)
+![Avisos](docs/capturas/avisos.png)
 
 El gráfico permite explorar distintas ventanas de tiempo, hacer zoom por eje, desplazar la vista y consultar valores registrados. En la versión 3.2, **Pausa/Reanudar** detiene temporalmente la recepción de MEGAORNO sin eliminar el historial ni cerrar la sesión. La adquisición interna del registrador MadgeTech continúa de forma independiente.
 
