@@ -65,10 +65,7 @@ Subir docs/img/03-adquisicion-madgetech.jpg
 
 El gradiente temporal expresa cuánto cambia la temperatura por unidad de tiempo:
 
-\[
-g_t=\frac{\Delta T}{\Delta t}, \qquad
-g_{\mathrm{°C/h}}=3600\frac{T_n-T_{n-1}}{t_n-t_{n-1}}
-\]
+**G = (Tf - Ti) / (ti - tf)**
 
 Aquí, las temperaturas se expresan en °C y los tiempos en segundos. El signo distingue el calentamiento del enfriamiento. **Se utiliza el intervalo real entre mediciones**, no un factor fijo: con un muestreo de 15 segundos no corresponde aplicar el multiplicador usado anteriormente para cinco minutos.
 
@@ -93,7 +90,7 @@ La aplicación presenta una pantalla de inicio y **cinco pestañas principales**
 
 ![Inicio](docs/capturas/inicio.png)
 ![Curvas](docs/capturas/curvas.png)
-![Perfil Ideal](docs/capturas/perfil-ideal.png)
+![Perfil Ideal](docs/capturas/perfil.png)
 ![Estadísticas](docs/capturas/estadisticas.png)
 ![Datos](docs/capturas/datos.png)
 ![Avisos](docs/capturas/avisos.png)
