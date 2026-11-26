@@ -10,6 +10,12 @@ El repositorio conserva **código fuente navegable por rama**. Cada rama de vers
 
 ## Detalles de las entregas
 
+### Instalador de Windows para 3.2
+
+Se incorpora un instalador EXE completo para Windows 10/11 x64 con Python privado, bibliotecas fijadas por hash, puente WCF x86 precompilado, .NET Framework 4.8 y Visual C++ x64/x86. Crea automáticamente el acceso directo del escritorio con la imagen del horno. MadgeTech y sus controladores se instalan aparte.
+
+El código de empaquetado queda en [`installer/`](installer/README.md) y el ejecutable se publica en [GitHub Releases](https://github.com/BaltazarPatane/MEGAORNO/releases/latest) después de comprobar su instalación, apertura, exportaciones, reinstalación y desinstalación en Windows. Se conservan las capturas del usuario. Esta revisión de distribución mantiene la versión funcional 3.2.
+
 ### 3.0
 
 Consolida el visor de tratamientos térmicos en una aplicación de escritorio modular con interoperabilidad WCF, cálculo basado en timestamps de medición y exportaciones independientes. Incluye pruebas automatizadas y ejemplos reproducibles.
@@ -35,3 +41,4 @@ Documento completo [CAMBIOS_3.2.md](docs/CAMBIOS_3.2.md).
 5. Evitar añadir ZIP de todo el código fuente a Git. Si se necesitan paquetes descargables, publicarlos como artefactos de GitHub Releases, manteniendo el código navegable.
 
 La línea base del proyecto fue creada por el usuario y su equipo. Las ramas aquí documentadas se reconstruyeron desde las entregas ZIP que ya constaban en el repositorio, preservando el historial anterior.
+

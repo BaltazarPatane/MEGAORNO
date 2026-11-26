@@ -1,5 +1,7 @@
 # MEGAORNO 3.2
 
+**Instalador completo para Windows:** descargar [MEGAORNO-Setup-x64.exe](https://github.com/BaltazarPatane/MEGAORNO/releases/latest/download/MEGAORNO-Setup-x64.exe). Incluye Python privado, bibliotecas, .NET 4.8 y Visual C++ y crea automáticamente el acceso directo con el icono del horno. MadgeTech se instala aparte. Ver [installer/README.md](installer/README.md). Las instrucciones de Python/BAT que siguen son para ejecutar desde el código fuente.
+
 Aplicación de escritorio para adquirir temperaturas desde MadgeTech 4, comparar
 un tratamiento con su perfil ideal y calcular gradientes temporales usando el
 intervalo real entre mediciones. Interfaz nueva en Qt/PySide6 sobre la base v2.2
@@ -198,3 +200,4 @@ para desarrollo. No usar una carpeta de producción en las pruebas.
 - Arquitectura y alcance: [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
 - Resultados comprobados y prueba de aceptación física: [docs/VALIDACION.md](docs/VALIDACION.md).
 - Documentación original, conservada como referencia histórica: [docs/BASE_V2.2.md](docs/BASE_V2.2.md).
+

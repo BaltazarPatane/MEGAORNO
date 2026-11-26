@@ -1,0 +1,19 @@
+{
+  "python": {
+    "version": "3.14.10",
+    "url": "https://www.python.org/ftp/python/3.14.10/python-3.14.10-embed-amd64.zip",
+    "sha256": "90905e64a840557d8c1bc4f5b74db3d7ee85e3ffb217611cac1c7813acea4159"
+  },
+  "dotnet48": {
+    "url": "https://go.microsoft.com/fwlink/?linkid=2088631",
+    "filename": "dotnet48.exe"
+  },
+  "vc_x64": {
+    "url": "https://aka.ms/vc14/vc_redist.x64.exe",
+    "filename": "vc_redist.x64.exe"
+  },
+  "vc_x86": {
+    "url": "https://aka.ms/vc14/vc_redist.x86.exe",
+    "filename": "vc_redist.x86.exe"
+  }
+}

@@ -7,7 +7,7 @@ import os
 import sys
 import uuid
 from PySide6.QtCore import Qt,QTimer,QProcess,QStandardPaths
-from PySide6.QtGui import QFont,QCloseEvent
+from PySide6.QtGui import QFont,QCloseEvent,QIcon
 from PySide6.QtWidgets import QApplication,QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QStackedWidget,QTabWidget,QFrame,QMenu,QFileDialog,QMessageBox
 from acquisition import AcquisitionController
 from models import Sesion,Perfil,Registro,cargar_xlsx
@@ -21,6 +21,8 @@ ROOT=Path(__file__).resolve().parent
 class App(QMainWindow):
     def __init__(self,state_dir=None,controller=None):
         super().__init__();self.setWindowTitle('MEGAORNO · Tratamientos térmicos');self.resize(1366,820);self.setMinimumSize(1080,700)
+        logo=ROOT/'ui'/'icons'/'megaorno.ico'
+        if logo.is_file():self.setWindowIcon(QIcon(str(logo)))
         location=state_dir or os.environ.get('MEGAORNO_STATE_DIR') or str(Path(os.environ['LOCALAPPDATA'])/'HornoMadgeTech' if os.environ.get('LOCALAPPDATA') else Path(QStandardPaths.writableLocation(QStandardPaths.StandardLocation.AppLocalDataLocation)))
         self.state_dir=Path(location);self.state_dir.mkdir(parents=True,exist_ok=True)
         self.controller=controller or AcquisitionController(self.state_dir)
@@ -244,6 +246,10 @@ class App(QMainWindow):
         self.timer.stop();self.refresh_timer.stop();event.accept()
 
 def main():
+    if os.name=='nt':
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('ARS.MEGAORNO')
     app=QApplication.instance() or QApplication(sys.argv);app.setApplicationName('MEGAORNO');app.setOrganizationName('MEGAORNO');app.setFont(QFont('Segoe UI',10));window=App();window.show();return app.exec()
 
 if __name__=='__main__':sys.exit(main())
+

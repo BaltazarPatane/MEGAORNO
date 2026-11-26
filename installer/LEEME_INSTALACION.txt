@@ -1,0 +1,39 @@
+MEGAORNO 3.2 - Instalador completo para Windows de 64 bits
+
+Este instalador contiene MEGAORNO, su propio Python de 64 bits, todas las
+bibliotecas Python del proyecto, .NET Framework 4.8 y los redistribuibles de
+Microsoft Visual C++ x64 y x86. No necesita descargar dependencias al instalar.
+Windows debe estar actualizado y tener una versión compatible (Windows 10
+2004 o posterior, o Windows 11, en una PC x64).
+
+El acceso directo MEGAORNO se crea automáticamente en el escritorio y en el
+menú Inicio, con la imagen del horno. No es necesario usar Iniciar.bat ni
+instalar Python por separado. El Python incluido es privado de MEGAORNO.
+
+MADGETECH SE DESCARGA E INSTALA APARTE
+El instalador no incluye MadgeTech, sus DLL propietarias ni los controladores
+específicos del instrumento. Para recibir datos reales instalá MadgeTech 4
+desde la página del fabricante, prepará el equipo e iniciá la adquisición en
+tiempo real y la salida Interop/WCF.
+https://www.madgetech.com/software/madgetech-4-software/
+
+Después de instalar, abrí MEGAORNO desde el escritorio. Cargar ejemplo permite
+comprobar el programa sin MadgeTech. Para la conexión real, desplegá
+Configuración del equipo, comprobá la carpeta de MadgeTech y usá la dirección
+net.pipe://localhost/MT4Data, salvo otra dirección local confirmada.
+
+Windows pedirá permisos de administrador para la instalación y sus componentes
+compartidos. Si Microsoft informa que hace falta reiniciar, completá el reinicio
+antes de usar el programa. No se fuerza un reinicio durante la instalación.
+
+Las capturas y configuraciones existentes se conservan en
+%LOCALAPPDATA%\HornoMadgeTech (o en el destino que hayas elegido).
+Desinstalar MEGAORNO elimina sus archivos de programa y accesos directos;
+conserva los registros del usuario y los componentes compartidos de Microsoft.
+
+Los avisos de arranque se guardan en %LOCALAPPDATA%\HornoMadgeTech\logs.
+El instalador guarda sus diagnósticos de componentes de Microsoft en
+%PROGRAMDATA%\MEGAORNO\Instalacion.
+
+Las licencias de Python y de las bibliotecas incluidas se conservan en runtime
+y en los directorios .dist-info de runtime\Lib\site-packages.

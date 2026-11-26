@@ -123,6 +123,10 @@ El código de cada entrega se encuentra disponible por separado en las ramas [v3
 
 ## Instalación y ejecución
 
+**Instalación recomendada en Windows:** descargar [MEGAORNO-Setup-x64.exe](https://github.com/BaltazarPatane/MEGAORNO/releases/latest/download/MEGAORNO-Setup-x64.exe) y completar el asistente. Incluye un Python privado, las bibliotecas, .NET Framework 4.8 y Visual C++ x64/x86; crea automáticamente el acceso directo del escritorio con la imagen del horno. **MadgeTech 4 y sus controladores se instalan aparte.** La [guía del instalador](installer/README.md) explica sus componentes, errores y comprobaciones. Las capturas existentes se conservan al actualizar o desinstalar.
+
+### Ejecución desde el código fuente
+
 **Requisitos para adquisición real:** Windows, Python 3.11–3.14 (64 bits), .NET Framework 4.8 y MadgeTech 4 instalado con sus bibliotecas de comunicación. Se recomienda Python 3.12.
 
 1. Clonar el repositorio o descargar el código de `main`.
@@ -166,3 +170,4 @@ Las próximas etapas del proyecto contemplan:
 **MEGAORNO · Investigación y Desarrollo · Astillero Río Santiago**
 
 </div>
+

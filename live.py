@@ -5,11 +5,37 @@ import os
 from pathlib import Path
 import subprocess
 import threading
+import tempfile
 import xml.etree.ElementTree as ET
 from models import numero, fecha_local
 
 
 _BUILD_LOCK=threading.Lock()
+
+
+def install_bundled_bridge(base,folder,fingerprint):
+    """Copy the verified build shipped by the Windows installer, atomically.
+
+    Source checkouts without the build keep the original csc compilation path.
+    Updating C# source also invalidates the bundled build rather than executing
+    a bridge built for a different source version.
+    """
+    base,folder=Path(base),Path(folder)
+    executable=base/'HornoWcfBridge.exe';metadata=base/'HornoWcfBridge.build.json'
+    if not executable.is_file() or not metadata.is_file():return False
+    build=json.loads(metadata.read_text(encoding='utf-8'))
+    if build.get('source_sha256')!=fingerprint:return False
+    payload=executable.read_bytes()
+    if hashlib.sha256(payload).hexdigest()!=build.get('binary_sha256'):
+        raise RuntimeError('El puente WCF incluido está dañado. Reinstalá MEGAORNO para restaurarlo.')
+    temporary=None
+    try:
+        with tempfile.NamedTemporaryFile(dir=folder,prefix='HornoWcfBridge-',suffix='.tmp',delete=False) as stream:
+            temporary=Path(stream.name);stream.write(payload);stream.flush();os.fsync(stream.fileno())
+        os.replace(temporary,folder/'HornoWcfBridge.exe')
+    finally:
+        if temporary is not None:temporary.unlink(missing_ok=True)
+    return True
 
 
 def carpeta_madgetech():
@@ -166,7 +192,6 @@ class WcfBridge:
             folder.mkdir(parents=True,exist_ok=True);base=Path(__file__).resolve().parent/'wcf';sources=[base/'Bridge.cs',base/'MadgeTechClient.cs',base/'PollGate.cs'];exe=folder/'HornoWcfBridge.exe'
             windir=Path(os.environ.get('WINDIR',r'C:\Windows'))
             csc=next((p for p in [windir/'Microsoft.NET/Framework64/v4.0.30319/csc.exe',windir/'Microsoft.NET/Framework/v4.0.30319/csc.exe'] if p.exists()),None)
-            if not csc:raise RuntimeError('No se encontró el compilador de .NET Framework. Se necesita .NET Framework 4.8 en Windows.')
             # A cancelled instance may still be finishing csc while a new
             # session connects. Share one build gate so its executable/stamp
             # cannot be replaced by two compiler processes simultaneously.
@@ -174,10 +199,14 @@ class WcfBridge:
                 if self.stop_event.is_set():return
                 fingerprint=hashlib.sha256(b'v2.1-x86'+b''.join(source.read_bytes() for source in sources)).hexdigest();stamp=folder/'bridge_build.sha256'
                 if not exe.exists() or not stamp.exists() or stamp.read_text(encoding='ascii')!=fingerprint:
-                    emit({'type':'log','data':'Compilando el puente WCF local…'})
-                    cmd=[str(csc),'/nologo','/target:exe','/platform:x86','/out:'+str(exe),'/r:System.ServiceModel.dll','/r:System.Runtime.Serialization.dll','/r:System.Web.Services.dll','/r:System.Web.Extensions.dll','/r:System.Xml.Linq.dll']+[str(source) for source in sources]
-                    result=subprocess.run(cmd,capture_output=True,text=True,errors='replace',timeout=50,creationflags=subprocess.CREATE_NO_WINDOW)
-                    if result.returncode:raise RuntimeError(result.stdout+'\n'+result.stderr)
+                    if install_bundled_bridge(base,folder,fingerprint):
+                        emit({'type':'log','data':'Puente WCF incluido verificado y preparado.'})
+                    else:
+                        if not csc:raise RuntimeError('No se encontró el compilador de .NET Framework. Se necesita .NET Framework 4.8 en Windows.')
+                        emit({'type':'log','data':'Compilando el puente WCF local…'})
+                        cmd=[str(csc),'/nologo','/target:exe','/platform:x86','/out:'+str(exe),'/r:System.ServiceModel.dll','/r:System.Runtime.Serialization.dll','/r:System.Web.Services.dll','/r:System.Web.Extensions.dll','/r:System.Xml.Linq.dll']+[str(source) for source in sources]
+                        result=subprocess.run(cmd,capture_output=True,text=True,errors='replace',timeout=50,creationflags=subprocess.CREATE_NO_WINDOW)
+                        if result.returncode:raise RuntimeError(result.stdout+'\n'+result.stderr)
                     stamp.write_text(fingerprint,encoding='ascii')
             if self.stop_event.is_set():return
             # Configuración por stdin: las credenciales no se escriben en disco ni en la línea de comandos.
@@ -226,3 +255,4 @@ class WcfBridge:
             if self.process and self.process.poll() is None:
                 try:self.process.terminate()
                 except OSError:pass  # Process may have exited between poll and terminate.
+

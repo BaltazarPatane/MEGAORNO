@@ -1,0 +1,96 @@
+name: Instalador Windows
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/windows-installer.yml'
+      - 'installer/**'
+      - 'ui/icons/megaorno.ico'
+      - 'tools/installed_smoke.py'
+      - 'tools/export_session.py'
+      - '*.py'
+      - 'ui/**'
+      - 'wcf/**'
+      - 'tests/**'
+      - 'requirements.lock'
+      - 'VERSION'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instalador-windows-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-test-release:
+    runs-on: windows-2022
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      QT_QPA_PLATFORM: offscreen
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.10'
+          architecture: x64
+      - name: Preparar herramientas de compilación
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup --yes --no-progress
+            if ($LASTEXITCODE -notin @(0,3010)) { throw 'No se pudo preparar Inno Setup.' }
+          }
+          python -m pip install --disable-pip-version-check --require-hashes --only-binary=:all: -r requirements.lock
+          if ($LASTEXITCODE -ne 0) { throw 'Falló la instalación verificada de dependencias.' }
+      - name: Ejecutar pruebas del programa
+        run: python -m unittest discover -s tests -v
+      - name: Compilar paquete e instalador offline
+        run: python installer/build.py
+      - name: Probar instalación real y desinstalación
+        run: ./installer/test_install.ps1
+      - name: Publicar instalador comprobado
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = (Get-Content VERSION -Raw).Trim()
+          $tag = "v${version}-instalador.${{ github.run_number }}"
+          $body = @"
+          Instalador completo de MEGAORNO $version para Windows x64.
+
+          Descargar **MEGAORNO-Setup-x64.exe**, ejecutarlo y abrir el acceso directo MEGAORNO del escritorio. Se crea automáticamente con la imagen del horno.
+
+          Incluye Python privado, dependencias Python fijadas por hash, .NET Framework 4.8 y Visual C++ x64/x86. La instalación no requiere Internet para descargar estos componentes.
+
+          **MadgeTech 4 y los controladores propios del instrumento se descargan e instalan aparte desde el fabricante.**
+
+          La actualización y desinstalación conservan las capturas. Windows puede solicitar reiniciar después de preparar un componente compartido.
+
+          El archivo VALIDACION_WINDOWS.txt describe los controles realizados y sus límites. componentes.json identifica los componentes y SHA256SUMS.txt permite comprobar las descargas. El instalador del proyecto no dispone de una firma de editor comercial.
+
+          Código: ${{ github.sha }}
+          Compilación: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          "@
+          $notes = Join-Path $env:RUNNER_TEMP 'notas-instalador.md'
+          [IO.File]::WriteAllText($notes, $body, [Text.UTF8Encoding]::new($false))
+          gh release create $tag build/windows/dist/MEGAORNO-Setup-x64.exe build/windows/dist/componentes.json build/windows/dist/VALIDACION_WINDOWS.txt build/windows/dist/SHA256SUMS.txt --repo '${{ github.repository }}' --target '${{ github.sha }}' --title "MEGAORNO $version - Instalador completo para Windows" --notes-file $notes --latest
+          if ($LASTEXITCODE -ne 0) { throw 'No se pudo publicar la versión.' }
+      - name: Conservar resultados de diagnóstico
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: instalador-windows-${{ github.run_number }}
+          path: |
+            build/windows/dist/
+            build/windows/verificacion-payload/resultado.json
+            build/windows/verificacion-instalada/
+          if-no-files-found: warn
+          retention-days: 14
