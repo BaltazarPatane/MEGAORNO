@@ -90,11 +90,17 @@ def main():
          '/out:'+str(payload/'MEGAORNO.exe'),'/win32icon:'+str(ROOT/'ui'/'icons'/'megaorno.ico'),
          '/r:System.Windows.Forms.dll',SOURCE/'Launcher.cs'])
     shutil.copy2(SOURCE/'Launcher.exe.config',payload/'MEGAORNO.exe.config')
+    powershell=shutil.which('pwsh.exe') or shutil.which('powershell.exe')
+    if not powershell:raise RuntimeError('Se necesita PowerShell para verificar las firmas de Microsoft.')
+    # A Windows PowerShell child must not inherit PowerShell 7's module paths.
+    signature_env=dict(os.environ)
+    for key in list(signature_env):
+        if key.casefold()=='psmodulepath':signature_env.pop(key)
     vendor={}
     for key in ['dotnet48','vc_x64','vc_x86']:
         spec=dependencies[key];path=prerequisites/spec['filename'];download(spec['url'],path)
-        result=subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass',
-            '-File',str(SOURCE/'verify_microsoft.ps1'),'-Path',str(path)],capture_output=True,text=True,errors='replace')
+        result=subprocess.run([powershell,'-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass',
+            '-File',str(SOURCE/'verify_microsoft.ps1'),'-Path',str(path)],capture_output=True,text=True,errors='replace',env=signature_env)
         if result.returncode:
             raise RuntimeError('Falló la verificación de '+path.name+'\n'+result.stdout+'\n'+result.stderr)
         vendor[key]=json.loads(result.stdout.lstrip('\ufeff'))
