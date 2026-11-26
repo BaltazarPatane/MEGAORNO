@@ -209,7 +209,7 @@ class ExportIntegrity(unittest.TestCase):
             self.assertTrue(path.read_bytes().startswith(b'%PDF-'))
             self.assertGreater(path.stat().st_size,15000)
             if shutil.which('pdftotext'):
-                result=subprocess.run(['pdftotext','-layout',str(path),'-'],check=True,capture_output=True,text=True)
+                result=subprocess.run(['pdftotext','-enc','UTF-8','-layout',str(path),'-'],check=True,capture_output=True,text=True,encoding='utf-8')
                 text=result.stdout
                 for expected in ['Ensayo de integridad','SIMULACIÓN','17 min','Termocuplas · 1','Termocuplas · 3','19/12/2024 15:29:11','652.50','Última válida']:
                     self.assertIn(expected,text)
@@ -217,3 +217,4 @@ class ExportIntegrity(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
