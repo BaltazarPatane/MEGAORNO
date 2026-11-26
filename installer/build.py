@@ -94,7 +94,9 @@ def main():
     for key in ['dotnet48','vc_x64','vc_x86']:
         spec=dependencies[key];path=prerequisites/spec['filename'];download(spec['url'],path)
         result=subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass',
-            '-File',str(SOURCE/'verify_microsoft.ps1'),'-Path',str(path)],check=True,capture_output=True,text=True)
+            '-File',str(SOURCE/'verify_microsoft.ps1'),'-Path',str(path)],capture_output=True,text=True,errors='replace')
+        if result.returncode:
+            raise RuntimeError('Falló la verificación de '+path.name+'\n'+result.stdout+'\n'+result.stderr)
         vendor[key]=json.loads(result.stdout.lstrip('\ufeff'))
         vendor[key]['url']=spec['url'];vendor[key]['filename']=path.name
     packages={d.metadata['Name']:d.version for d in importlib.metadata.distributions(path=[str(site)])}
